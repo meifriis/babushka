@@ -4,25 +4,70 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Babushka</title>
+    <title>Bistro Babushka</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="menukort"> </div>
+
+    <div id="popup">
+        <div id="popupindhold">
+            <button class="close-content">Close</button>
+            <h2 class="info" data-navn> </h2>
+            <img src="" alt="" class="infoimg" data-popupBillede>
 
 
-    <template class="menutemplate">
+            <details open>
+                <p class="info" data-langbeskrivelse></p>
+                <p> Pris: <span class="info" data-pris> </span> ,-</p>
+            </details>
+        </div>
+    </div>
 
-        <artice class="food">
-        <h2 class="navn"> </h2>
-<img class="billede" src=" " alt=" ">            <p class="kortbesrkivelse"> </p>
-            <div class="pris"> </div> </artice>
 
+
+    <header>
+        <h1> Bistro Babushka </h1>
+        <nav>
+            <button id="filter-alle"> Alle</button>
+            <button id="filter-forretter"> Forretter</button>
+            <button id="filter-hovedretter"> Hovedretter</button>
+            <button id="filter-desserter"> Desserter</button>
+            <button id="filter-drikkevarer"> Drikkevarer</button>
+        </nav>
+    </header>
+
+
+    <main>
+        <h1 id="overskrift" data-overskrift> Menu </h1>
+
+        <div class="menukort" data-menukort> </div>
+    </main>
+
+    <template class="menutemplate" data-menutemplate>
+        <artice class="food" data-food>
+        <h2 class="navn" data-navn> </h2>
+        <img class="billede" src="" alt="" data-billede>
+        <p class="kortbeskrivelse" data-kortbeskrivelse></p>
+        <div class="pris" data-pris></div>
+        </artice>
     </template>
 
 
+
+
+
+    <footer>
+        <section>
+            <adress>Adresse: Grønnegade 97 1234 København K </adress>
+            <aside> Åbningstider: Mandag-Fredag 10.30- 22.00 Lørdag 12:23.00</aside>
+        </section>
+    </footer>
+
+
+
     <script src="java.js"></script>
+
 </body>
 
 </html>
