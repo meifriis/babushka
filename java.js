@@ -1,15 +1,30 @@
 let menukort = [];
-
+//find tekst på klikket knap
 
 document.addEventListener("DOMContentLoaded", hentJson);
 
 async function hentJson() {
     let jsonData = await fetch("menu.json");
     menukort = await jsonData.json();
-    visMenukort(menukort, "Menu");
-    lavFiltre();
-}
 
+    document.querySelector("nav").addEventListener("click", () => {
+
+        let kategori = event.target.textContent.toLowerCase();
+        if (kategori != "alle") {
+            let kat = menukort.filter(madret => madret.kategori == kategori);
+            visMenukort(kat, kategori);
+        } else {
+            visMenukort(menukort, kategori);
+            document.querySelector("[data-overskrift]").textContent = "Menu"
+        }
+    });
+    visMenukort(menukort, "menu");
+
+
+    menukort.sort((a, b) => a.navn.localeCompare(b.navn));
+    visMenukort(menukort);
+
+}
 
 function visMenukort(menukort, overskrift) {
 
@@ -53,11 +68,7 @@ function openModal() {
 
     })
     console.log(myId);
-
-
-
 }
-
 
 let closeModal = document.querySelector(".close-content");
 let modal = document.querySelector("#popup");
@@ -69,39 +80,4 @@ window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.visibility = "hidden";
     }
-}
-
-function lavFiltre() {
-
-    let forretter = menukort.filter(madret => madret.kategori == "forretter");
-    let hovedretter = menukort.filter(madret => madret.kategori == "hovedretter");
-    let desserter = menukort.filter(madret => madret.kategori == "desserter");
-    let drikkevarer = menukort.filter(madret => madret.kategori == "drikkevarer");
-
-
-    //kald visRetter med de nye arrays
-
-    document.querySelector("#filter-alle").addEventListener("click", () => {
-        visMenukort(menukort, "Menu");
-    });
-
-    document.querySelector("#filter-forretter").addEventListener("click", () => {
-        visMenukort(forretter, "Forretter");
-
-    });
-
-    document.querySelector("#filter-hovedretter").addEventListener("click", () => {
-        visMenukort(hovedretter, "Hovedretter");
-
-    });
-
-    document.querySelector("#filter-desserter").addEventListener("click", () => {
-        visMenukort(desserter, "Desserter");
-
-    });
-
-    document.querySelector("#filter-drikkevarer").addEventListener("click", () => {
-        visMenukort(drikkevarer, "Drikkevarer");
-
-    });
 }
