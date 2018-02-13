@@ -1,30 +1,15 @@
 let menukort = [];
-//find tekst på klikket knap
+
 
 document.addEventListener("DOMContentLoaded", hentJson);
 
 async function hentJson() {
     let jsonData = await fetch("menu.json");
     menukort = await jsonData.json();
-
-    document.querySelector("nav").addEventListener("click", () => {
-
-        let kategori = event.target.textContent.toLowerCase();
-        if (kategori != "alle") {
-            let kat = menukort.filter(madret => madret.kategori == kategori);
-            visMenukort(kat, kategori);
-        } else {
-            visMenukort(menukort, kategori);
-            document.querySelector("[data-overskrift]").textContent = "Menu"
-        }
-    });
-    visMenukort(menukort, "menu");
-
-
-    menukort.sort((a, b) => a.navn.localeCompare(b.navn));
-    visMenukort(menukort);
-
+    visMenukort(menukort, "Menu");
+    lavFiltre();
 }
+
 
 function visMenukort(menukort, overskrift) {
 
@@ -60,15 +45,15 @@ function openModal() {
         if (myId == food.id) {
             document.querySelector("#popup").style.visibility = "visible";
             document.querySelector("[data-navn]").textContent = food.navn;
+            //console.log(food.id);
             document.querySelector("[data-langbeskrivelse]").textContent = food.langbeskrivelse;
             document.querySelector("[data-pris]").textContent = food.pris;
             document.querySelector("[data-popupBillede]").setAttribute("src", "imgs/small/" + food.billede + "-sm.jpg");
-
         }
-
     })
     console.log(myId);
 }
+
 
 let closeModal = document.querySelector(".close-content");
 let modal = document.querySelector("#popup");
@@ -78,6 +63,52 @@ closeModal.onclick = function () {
 
 window.onclick = function (event) {
     if (event.target == modal) {
-        modal.style.visibility = "hidden";
+        modal.style.display = "none";
     }
+}
+
+
+function lavFiltre() {
+
+    let forretter = menukort.filter(madret => madret.kategori == "forretter");
+    let hovedretter = menukort.filter(madret => madret.kategori == "hovedretter");
+    let sideorders = menukort.filter(madret => madret.kategori == "sideorders");
+    let desserter = menukort.filter(madret => madret.kategori == "desserter");
+    let drikkevarer = menukort.filter(madret => madret.kategori == "drikkevarer");
+
+
+    //kald visRetter med de nye arrays
+
+    document.querySelector(".title").addEventListener("click", () => {
+        location.href = "index.html";
+    });
+
+    document.querySelector("#filter-alle").addEventListener("click", () => {
+        visMenukort(menukort, "Menu");
+    });
+
+    document.querySelector("#filter-forretter").addEventListener("click", () => {
+        visMenukort(forretter, "Forretter");
+
+    });
+
+    document.querySelector("#filter-sideorders").addEventListener("click", () => {
+        visMenukort(sideorders, "Sideorders");
+
+    });
+
+    document.querySelector("#filter-hovedretter").addEventListener("click", () => {
+        visMenukort(hovedretter, "Hovedretter");
+
+    });
+
+    document.querySelector("#filter-desserter").addEventListener("click", () => {
+        visMenukort(desserter, "Desserter");
+
+    });
+
+    document.querySelector("#filter-drikkevarer").addEventListener("click", () => {
+        visMenukort(drikkevarer, "Drikkevarer");
+
+    });
 }
